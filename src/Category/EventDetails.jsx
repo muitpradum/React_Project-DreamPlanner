@@ -1,4 +1,6 @@
 import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const events = [
   {
@@ -83,30 +85,41 @@ const events = [
 
 function EventDetails() {
   const { id } = useParams();
+  const [event, setEvent] = useState(events.find((item) => item.id === Number(id)))
+  const [loading, setLoading] = useState(true);
 
-  const event = events.find((item) => item.id === Number(id));
+  useEffect(() => {
+    const fetchEvent = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/api/events/${id}`
+        );
+
+        setEvent(response.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvent();
+  }, [id]);
+
+  if (loading) {
+    return <h2 className="text-center mt-10">Loading...</h2>;
+  }
 
   if (!event) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <h2 className="text-2xl font-bold text-red-500">
-          Event not found
-        </h2>
-      </div>
+      <h2 className="text-center mt-10">
+        Event not found
+      </h2>
     );
   }
 
   return (
     <div className="min-h-screen bg-gray-100 py-10">
-
-      {/* Heading */}
-      {/* <h1 className="text-3xl text-center font-bold mb-8">
-        {/* Event : { id } */}
-        {/* <span className="text-purple-600">
-          Details
-        </span> */}
-      {/* </h1> *} */}
-
       {/* Main Card */}
       <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
 
@@ -131,10 +144,6 @@ function EventDetails() {
             <h3 className="text-2xl text-black text-left mt-2">
               {event.eventName}
             </h3>
-
-            {/* <p className="text-gray-500 mt-1">
-              Event Code: {event.eventCode}
-            </p> */}
 
             <p className="mt-5 text-black leading-7 text-left">
               {event.eventDetail}
@@ -176,11 +185,7 @@ function EventDetails() {
                 Book Now
               </Link>
 
-              <button
-                className="bg-gray-800 text-white px-6 py-3 rounded-lg hover:bg-gray-900"
-              >
-                Request Pricing
-              </button>
+              
 
             </div>
 

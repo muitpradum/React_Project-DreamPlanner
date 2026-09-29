@@ -1,10 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { FaEnvelope, FaKey, FaVenusMars, FaPhoneAlt, FaUser } from "react-icons/fa";
-import { FaPenToSquare } from "react-icons/fa6";
+
 import { useNavigate } from "react-router-dom";
-
-
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -48,7 +46,7 @@ function Register() {
     <div className="min-h-screen bg-gray-100">
       <div className="text-center">
         <h1 className="text-3xl font-bold !text-purple-500 relative">
-          User Registration <FaPenToSquare className="absolute  right-60 top-1/2 -translate-y-1/2 text-purple-500" />
+          User Registration
         </h1>
       </div>
       <div className="flex items-start justify-center bg-gray-100">

@@ -26,21 +26,36 @@ function Booking() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {
-            const response = await axios.post(
-                "http://localhost:5000/api/bookings",
-                {
-                    eventId: id,
-                    ...formData,
-                }
-            );
+        //     try {
+        //         const response = await axios.post(
+        //             "http://localhost:5000/api/bookings",
+        //             {
+        //                 eventId: id,
+        //                 ...formData,
+        //             }
+        //         );
 
-            alert(response.data.message || "Booking successful!");
-            navigate("/");
-        } catch (error) {
-            console.error(error);
-            alert("Booking failed!");
-        }
+        //         alert(response.data.message || "Booking successful!");
+        //         navigate("/");
+        //     } catch (error) {
+        //         console.error(error);
+        //         alert("Booking failed!");
+        //     }
+        // };
+        const bookingData = {
+            eventId: id,
+            ...formData,
+        };
+
+        // Save booking in browser
+        localStorage.setItem(
+            "booking",
+            JSON.stringify(bookingData)
+        );
+
+        alert("Booking successful!");
+
+        navigate("/React_Project-DreamPlanner");
     };
 
     return (
@@ -50,16 +65,16 @@ function Booking() {
                     User Booking
                 </h1>
             </div>
-             <p className="text-center text-gray-500 mb-6">
-                            Event ID: {id}
-                        </p>
+            <p className="text-center text-gray-500 mb-6">
+                Event ID: {id}
+            </p>
 
 
             <div className="flex items-start justify-center bg-gray-100">
                 <div className="w-full max-w-lg m-5 p-10 rounded-lg shadow-lg bg-linear-65 from-purple-300 to-sky-300">
 
                     <form onSubmit={handleSubmit} className="space-y-4">
-                       
+
 
                         <div className="mb-4 text-black ">
                             <input
@@ -84,8 +99,8 @@ function Booking() {
                                 required
                             />
                         </div>
-                       
-                        <div className="mb-4 text-black ">
+
+                        {/* <div className="mb-4 text-black ">
                             <input
                                 type="text"
                                 name="eventCatergory"
@@ -95,7 +110,7 @@ function Booking() {
                                 className="w-full border p-3 rounded-lg bg-white  px-4 py-2"
                                 required
                             />
-                        </div>
+                        </div> */}
 
                         <div className="mb-4 text-black ">
                             <input

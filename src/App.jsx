@@ -20,6 +20,8 @@ import Edetails from './Category/Edetails'
 import Informalsdetails from './Category/Informalsdetails'
 import Charitydetails from './Category/Charitydetails'
 import Booking from './pages/Booking'
+import AdminLogin from './pages/AdminLogin'
+import Udetails from './Category/Udetails'
 
 
 function App() {
@@ -28,7 +30,7 @@ function App() {
     <BrowserRouter>
     <Header/>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/React_Project-DreamPlanner" element={<Home />} />
          <Route path="/about" element={<About />} />
         <Route path="/events" element={<Events />} />
         <Route path="/eventdetails/:id" element={<EventDetails />} />
@@ -47,6 +49,9 @@ function App() {
         <Route path="/charitydetails/:id" element={<Charitydetails/>} />
 
         <Route path="/booking/:id" element={<Booking />} />
+        <Route path="/admin" element={<AdminLogin />} />
+        <Route path="/udetails/:id" element={<Udetails />} />
+        
 
 
       </Routes>

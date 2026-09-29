@@ -2,7 +2,6 @@
 import { useState } from "react";
 import axios from "axios";
 import { FaEnvelope, FaKey } from "react-icons/fa";
-import { FaRightToBracket } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -35,7 +34,7 @@ function Login() {
       localStorage.setItem("user", JSON.stringify(response.data.user));
 
       // Go to dashboard
-      navigate("/");
+      navigate("/React_Project-DreamPlanner");
 
     } catch (error) {
        alert(error.response?.data?.message || "Login failed");
@@ -45,7 +44,7 @@ function Login() {
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="text-center flex items-center justify-center gap-3">
-      <FaRightToBracket className="text-purple-500 text-3xl" />
+     
         <h1 className="text-3xl font-bold !text-purple-500">
           Login
         </h1>

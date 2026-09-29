@@ -65,14 +65,7 @@ function Events() {
         Our Events
       </h1>
     
-    {/* <div className="p-5 relative ">
-    <FaSearch className="absolute right-70 top-1/2 -translate-y-1/2 text-gray-500" />
-    <input type="search" placeholder="Search Events"  
-    className="w-120 bg-white border border-gray-400 rounded-md pl-10 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-
-    </input>
-    </div> */}
-
+  
       <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-6">
 
         {events.map((event) => (

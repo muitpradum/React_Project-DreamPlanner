@@ -4,13 +4,15 @@ import EventCategory from './EventCategory';
 import dandiya from "../assets/image/dandiya-dance.jpg"
 import artsFestival from "../assets/image/artsFestival.jfif"
 import diwalirangoli from "../assets/image/diwalirangoli.jpg"
+import { Link } from 'react-router-dom';
+
 
 function Home() {
   const events = [
     {
       id: 1,
       title: "Dandiya Celebration",
-      eventName:"International Trade Expo Centre Limited",
+      eventName:"Dream Celebration Arena",
       image: dandiya,
       place:"Sector 62, Noida",
       price:"399",
@@ -69,21 +71,21 @@ function Home() {
                   {event.title}
                 </h2>
 
-                <div className="text-gray-600 mb-2 text-left">
+                <div className="text-gray-600 mb-4 text-left">
     
                     <strong className="text-black">Venue Name : </strong>{event.eventName}<br />
                     <strong className="text-black text-left">Place : </strong> {event.place}<br />
                     <strong className="text-black">Entry Price : </strong>₹ {event.price}<br />
-                    <strong className="text-black">Event Date :</strong> {event.eventDate}
+                    <strong className="text-black">Event Date :</strong> {event.eventDate}<br/>
     
                   </div>
 
-                <button
-                  className="bg-purple-600 text-white px-5 py-2 
+                <Link to={`/udetails/${event.id}`}
+                  className="bg-purple-600 text-white px-5 py-2 mt-5 
                            rounded-lg hover:bg-purple-700"
                 >
-                  Plan Event
-                </button>
+                  Event Details
+                </Link>
 
               </div>
             </div>
