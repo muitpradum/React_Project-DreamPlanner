@@ -14,9 +14,11 @@ mongoose
   .catch((err) => console.log(err));
 
 const userRoutes = require("./routes/userRoutes");
+const contactRoutes = require("./routes/contactRoutes");
 
 
 app.use("/api/users", userRoutes);
+app.use("/api/contacts", contactRoutes);
 
 
 const PORT = process.env.PORT || 5000;
