@@ -95,15 +95,7 @@ function Header() {
             >
               Events
             </Link>
-
-            {/* <Link
-              to="/succressevents"
-              className="hover:text-yellow-300"
-            >
-              Successfull Events
-              
-            </Link> */}
-
+            
             <Link
               to="/contact" 
               className="hover:text-yellow-300"
