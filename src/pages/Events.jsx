@@ -1,62 +1,40 @@
 import {Link} from "react-router-dom"
 import { FaSearch } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import axios from "axios";
 function Events() {
-  const events = [
-    {
-      id: 1,
-      title: "Wedding",
-      hallname: "Royal Wedding",
-      place:"Gomti Nagar, Lucknow ",
-      price:50000,
-      guests:500,
-      image: "https://www.alfaazphotography.com/wp-content/uploads/2020/05/FW-_-SA-1621-scaled.jpg",
-    },
-    {
-      id: 2,
-      title: "Birthday",
-      hallname: "Grand Harmony Hall",
-      place:"Aliganj, Lucknow",
-      price:15000,
-      guests:150,
-      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVDQqOzrbmSCVtn3M5B-rumLzFcZKVEE-UXEndO6RCuA&s=10",
-    },
-    {
-      id: 3,
-      title: "Anniversary",
-      hallname: "Golden Crown Hall",
-      place:"Hazratganj, Lucknow",
-      price:20000,
-      guests:120,
-      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYX3Fb152vGtQTGkFzpkm6QbyuhiBEbRup6PC-Lm0Hz6ygS0ddhcrTlq4&s=10",
-    },
-    {
-      id: 4,
-      title: "Party",
-      hallname: "StarLight Banquet",
-      place:"Indira Nagar, Lucknow",
-      price:10000,
-      guests:80,
-      image: "https://images.unsplash.com/photo-1496337589254-7e19d01cec44",
-    },
-    {
-      id: 5,
-      title: "Concert",
-      hallname: "Golden Crown Hall",
-      place:"Alambagh, Lucknow",
-      price:25000,
-      guests:150,
-      image: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a",
-    },
-    {
-      id: 6,
-      title: "Seminar",
-      hallname: "Digital Learning Center",
-      place:"Mahanagar, Lucknow",
-      price:20000,
-      guests:100,
-      image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87",
-    },
-  ];
+
+  const [events,setEvents]=useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const fetchEvent = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/events"
+      );
+
+      setEvents(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setError("Unable to load events");
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchEvent();
+  }, []);
+   if (loading) {
+    return (
+      <div className="flex items-center justify-center bg-[#FFFFE0]">
+        <h2 className="text-2xl font-semibold">
+          Loading Projects...
+        </h2>
+      </div>
+    );
+  }
+
 
   return (
     <div className="bg-gray-100 py-12">
@@ -64,20 +42,27 @@ function Events() {
       <h1 className="text-4xl font-bold text-center !text-purple-600 mb-10">
         Our Events
       </h1>
+
+       {/* Error */}
+        {error && (
+          <p className="text-center text-red-500 mb-6">
+            {error}
+          </p>
+        )}
     
   
       <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-6">
 
         {events.map((event) => (
           <div
-            key={event.id}
+            key={event._id}
             className="bg-white rounded-xl overflow-hidden shadow-lg 
                        hover:shadow-2xl hover:-translate-y-2 
                        transition duration-300"
           >
 
             <img
-              src={event.image}
+              src={event.eventPicture}
               alt={event.title}
               className="w-full h-52 object-cover"
             />
@@ -89,14 +74,14 @@ function Events() {
               </h2>
              <div  className="text-gray-600 mb-2 text-left">
               
-              <strong className="text-black"> Venue Name : </strong>{event.hallname}<br/>
-              <strong className="text-black text-left">Place : </strong> {event.place}<br/>
+              <strong className="text-black"> Venue Name : </strong>{event.eventName}<br/>
+              <strong className="text-black text-left">Place : </strong> {event.eventPlace}<br/>
               <strong className="text-black">Price : </strong> {event.price}<br/>
               <strong className="text-black">Guests : </strong> {event.guests}
               
               </div>
 
-              <Link to={`/eventdetails/${event.id}`}
+              <Link to={`/eventdetails/${event.eventid}`}
               className="bg-purple-500 text-white px-2 py-1  rounded-lg
               hover:bg-sky-300 transition"
             >

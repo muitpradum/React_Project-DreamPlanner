@@ -26,36 +26,31 @@ function Booking() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        //     try {
-        //         const response = await axios.post(
-        //             "http://localhost:5000/api/bookings",
-        //             {
-        //                 eventId: id,
-        //                 ...formData,
-        //             }
-        //         );
+        try {
+            const bookingData = {
+                eventId: id,
+                ...formData,
+            };
 
-        //         alert(response.data.message || "Booking successful!");
-        //         navigate("/");
-        //     } catch (error) {
-        //         console.error(error);
-        //         alert("Booking failed!");
-        //     }
-        // };
-        const bookingData = {
-            eventId: id,
-            ...formData,
-        };
+            // Save to MongoDB
+            const response = await axios.post(
+                "http://localhost:5000/api/bookings",
+                bookingData
+            );
 
-        // Save booking in browser
-        localStorage.setItem(
-            "booking",
-            JSON.stringify(bookingData)
-        );
+            // Save to browser
+            localStorage.setItem(
+                "booking",
+                JSON.stringify(bookingData)
+            );
 
-        alert("Booking successful!");
+            alert(response.data.message || "Booking successful!");
 
-        navigate("/React_Project-DreamPlanner");
+            navigate("/React_Project-DreamPlanner");
+        } catch (error) {
+            console.error(error);
+            alert("Booking failed!");
+        }
     };
 
     return (

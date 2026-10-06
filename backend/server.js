@@ -15,10 +15,18 @@ mongoose
 
 const userRoutes = require("./routes/userRoutes");
 const contactRoutes = require("./routes/contactRoutes");
+const bookingRoutes = require("./routes/bookingRoutes");
+const eventRoutes = require("./routes/eventRoutes");
+const socialeventRoutes = require("./routes/socialeventRoutes");
+const educationRoutes = require("./routes/educationRoutes");
 
 
 app.use("/api/users", userRoutes);
 app.use("/api/contacts", contactRoutes);
+app.use("/api/bookings", bookingRoutes);
+app.use("/api/events", eventRoutes);
+app.use("/api/socialevents", socialeventRoutes);
+app.use("/api/educationevents", educationRoutes);
 
 
 const PORT = process.env.PORT || 5000;

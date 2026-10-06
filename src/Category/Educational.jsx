@@ -1,66 +1,40 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-const educationalEvents = [
-  {
-    id: 1,
-    title: "Graduation Ceremony",
-    image: "https://png.pngtree.com/thumb_back/fh260/background/20241023/pngtree-the-celebration-of-graduation-day-image_16440334.jpg",
-    eventName: "Royal Hotel",
-    place: "Rohini, New Delhi",
-    price: 40000,
-    guests: 200,
-  },
-  {
-    id: 2,
-    title: "Coding Workshop",
-    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80",
-    eventName: "Tech Innovation Hall",
-    place: "Connaught Place, New Delhi",
-    price: 30000,
-    guests: 200,
 
-  },
-  {
-    id: 3,
-    title: "Science Exhibition",
-    image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80",
-    eventName: "Future Science Hall",
-    place: "Noida Sector 62",
-    price: 25000,
-    guests: 150,
-  },
-  {
-    id: 4,
-    title: "Quiz Competition",
-    image: "https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?auto=format&fit=crop&w=800&q=80",
-    eventName: "FutureTech Hall",
-    place: "Dwarka, New Delhi",
-    price: 4500,
-    guests: 90,
-
-  },
-  {
-    id: 5,
-    title: "Career Guidance",
-    image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=800&q=80",
-    eventName: "Digital Learning Center",
-    place: "Saket, New Delhi",
-    price: 4000,
-    guests: 80,
-  },
-  {
-    id: 6,
-    title: "Educational Seminar",
-    image:"https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80",
-    eventName: "Digital Learning Center",
-    place: "Saket, New Delhi",
-    price: 10000,
-    guests: 120,
-  },
-];
 
 function Educational() {
+  const [educationevents, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const fetchEvent = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/educationevents"
+      );
+
+      setEvents(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setError("Unable to load events");
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchEvent();
+  }, []);
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center bg-[#FFFFE0]">
+        <h2 className="text-2xl font-semibold">
+          Loading Projects...
+        </h2>
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-6">
 
@@ -74,12 +48,18 @@ function Educational() {
           Discover meaningful educational events that inspire learning, develop new skills,<br /> and create opportunities for students to grow
           and succeed.
         </p>
+        {/* Error */}
+        {error && (
+          <p className="text-center text-red-500 mb-6">
+            {error}
+          </p>
+        )}
       </div>
 
       {/* Cards */}
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-        {educationalEvents.map((event) => (
+        {educationevents.map((event) => (
           <div
             key={event.id}
             className="bg-white rounded-xl shadow-lg text-center
@@ -89,7 +69,7 @@ function Educational() {
 
             {/* Image */}
             <img
-              src={event.image}
+              src={event.eventPicture}
               alt={event.title}
               className="w-full h-52 object-cover"
             />
@@ -103,7 +83,7 @@ function Educational() {
               <div className="text-gray-600 mb-2 text-left">
 
                 <strong className="text-black">Venue Name : </strong>{event.eventName}<br />
-                <strong className="text-black text-left">Place : </strong> {event.place}<br />
+                <strong className="text-black text-left">Place : </strong> {event.eventPlace}<br />
                 <strong className="text-black">Price : </strong> {event.price}<br />
                 <strong className="text-black">Guests : </strong> {event.guests}
 
@@ -111,7 +91,7 @@ function Educational() {
 
               {/* View Details */}
               <Link
-                to={`/edetails/${event.id}`}
+                to={`/edetails/${event._id}`}
                 className="inline-block bg-purple-600 text-white
               px-4 py-2 rounded-lg hover:bg-purple-700 transition"
               >
