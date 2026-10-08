@@ -94,7 +94,7 @@ function SocialEvents() {
 
 
 
-              <Link to={`/social/viewdetails/${event._id}`}
+              <Link to={`/viewdetails/${event._id}`}
                 className="bg-purple-600 text-white px-2 py-1 rounded-lg
               hover:bg-purple-700 transition"
               >

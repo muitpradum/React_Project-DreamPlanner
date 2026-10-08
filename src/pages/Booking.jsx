@@ -10,10 +10,11 @@ function Booking() {
         name: "",
         email: "",
         phone: "",
+        price:"",
         guests: 1,
         date: "",
         eventName: "",
-        eventCategory: "",
+        title: "",
     });
 
     const handleChange = (e) => {
@@ -95,17 +96,17 @@ function Booking() {
                             />
                         </div>
 
-                        {/* <div className="mb-4 text-black ">
+                        <div className="mb-4 text-black ">
                             <input
                                 type="text"
-                                name="eventCatergory"
-                                placeholder="Enter your event name"
-                                value={formData.eventCategory}
+                                name="title"
+                                placeholder="Enter your event type"
+                                value={formData.title}
                                 onChange={handleChange}
                                 className="w-full border p-3 rounded-lg bg-white  px-4 py-2"
                                 required
                             />
-                        </div> */}
+                        </div>
 
                         <div className="mb-4 text-black ">
                             <input
@@ -125,6 +126,18 @@ function Booking() {
                                 name="phone"
                                 placeholder="Enter your phone number"
                                 value={formData.phone}
+                                onChange={handleChange}
+                                className="w-full border p-3 rounded-lg bg-white  px-4 py-2"
+                                required
+                            />
+                        </div>
+
+                        <div className="mb-4 text-black ">
+                            <input
+                                type="number"
+                                name="price"
+                                placeholder="Enter your price"
+                                value={formData.price}
                                 onChange={handleChange}
                                 className="w-full border p-3 rounded-lg bg-white  px-4 py-2"
                                 required

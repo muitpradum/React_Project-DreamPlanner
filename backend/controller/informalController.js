@@ -1,11 +1,11 @@
-const Socialevent = require("../model/socialEvent");
+const Informalevent = require("../model/informalEvent");
 
-// POST - Create Socialevent
-const createSocialevent = async (req, res) => {
+// POST - Create Informalevent
+const createInformalevent = async (req, res) => {
   try {
     const { title, eventName, eventPlace, price, guests, eventPicture } = req.body;
 
-    const newSocialevent = await Socialevent.create({
+    const newInformalevent = await Informalevent.create({
     
       title,
       eventName,
@@ -16,8 +16,8 @@ const createSocialevent = async (req, res) => {
     });
 
     res.status(201).json({
-      message: "Socialevent successfully",
-      data: newSocialevent,
+      message: "Informalevent successfully",
+      data: newInformalevent,
     });
   } catch (error) {
     console.log("Event Error:", error);
@@ -29,12 +29,12 @@ const createSocialevent = async (req, res) => {
   }
 };
 
-// GET - Get All Event
-const getSocialevent = async (req, res) => {
+// GET - Get All Informalevent
+const getInformalevent = async (req, res) => {
   try {
-    const socialevent = await Socialevent.find().sort({ createdAt: -1 });
+    const informalevent = await Informalevent.find().sort({ createdAt: -1 });
 
-    res.status(200).json(socialevent);
+    res.status(200).json(informalevent);
   } catch (error) {
     res.status(500).json({
       message: "Failed to get event",
@@ -43,18 +43,18 @@ const getSocialevent = async (req, res) => {
   }
 };
 
-// GET - Get Single Socialevent
-const getSocialeventById = async (req, res) => {
+// GET - Get Single Informalevent
+const getInformaleventById = async (req, res) => {
   try {
-    const socialevent = await Socialevent.findById(req.params.id);
+    const informalevent = await Informalevent.findById(req.params.id);
 
-    if (!socialevent) {
+    if (!informalevent) {
       return res.status(404).json({
-        message: "Socialevent not found",
+        message: "Informalevent not found",
       });
     }
 
-    res.status(200).json(socialevent);
+    res.status(200).json(informalevent);
   } catch (error) {
     res.status(500).json({
       message: "Failed to get event",
@@ -63,12 +63,12 @@ const getSocialeventById = async (req, res) => {
   }
 };
 
-// DELETE - Delete Socialevent
-const deleteSocialevent = async (req, res) => {
+// DELETE - Delete Informalevent
+const deleteInformalevent = async (req, res) => {
   try {
-    const socialevent = await Socialevent.findByIdAndDelete(req.params.id);
+    const informalevent = await Informalevent.findByIdAndDelete(req.params.id);
 
-    if (!socialevent) {
+    if (!informalevent) {
       return res.status(404).json({
         message: "Event not found",
       });
@@ -85,8 +85,8 @@ const deleteSocialevent = async (req, res) => {
   }
 };
 module.exports = {
-    createSocialevent,
-    getSocialevent,
-    getSocialeventById,
-    deleteSocialevent
+    createInformalevent,
+    getInformalevent,
+    getInformaleventById,
+    deleteInformalevent
 };

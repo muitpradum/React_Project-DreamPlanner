@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
 
-const eventSchema = new mongoose.Schema(
+const charityeventSchema = new mongoose.Schema(
     {
        
-        
         title: {
             type: String,
             required: true,
@@ -22,9 +21,10 @@ const eventSchema = new mongoose.Schema(
             trim: true,
         },
 
-        price: {
-            type: Number,
+        eventCity: {
+            type: String,
             required: true,
+            trim: true,
         },
 
         guests: {
@@ -35,9 +35,13 @@ const eventSchema = new mongoose.Schema(
         eventPicture: {
             type: String,
             required: true
+        },
+        eventDate:{
+            type: Date,
+            required: true
         }
     }
 );
-const Events = mongoose.model("Event", eventSchema);
+const Charityevents = mongoose.model("Charityevent", charityeventSchema);
 
-module.exports = Events;
+module.exports = Charityevents;

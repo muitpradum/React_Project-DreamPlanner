@@ -81,7 +81,7 @@ function Events() {
               
               </div>
 
-              <Link to={`/eventdetails/${event.eventid}`}
+              <Link to={`/eventdetails/${event._id}`}
               className="bg-purple-500 text-white px-2 py-1  rounded-lg
               hover:bg-sky-300 transition"
             >

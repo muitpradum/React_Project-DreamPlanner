@@ -1,15 +1,17 @@
-const Bookings = require("../model/userBookings");
+const Bookings = require ("../model/userBookings");
 
 // POST - Create Message
 const createBookings = async (req, res) => {
   try {
-    const { name, email, phone, eventName, price, guests, date } = req.body;
+    const { EventId, name, email, phone, title, eventName, price, guests, date } = req.body;
 
     const newBookings = await Bookings.create({
+      EventId,
       name,
       email,
       phone,
       eventName,
+      title,
       price,
       guests,
       date,

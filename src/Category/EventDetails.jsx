@@ -2,121 +2,56 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const events = [
-  {
-    id: 1,
-    eventCategory: "Wedding",
-    eventName: "Royal Wedding",
-    // eventCode: "WED001",
-    eventDetail:"Make your wedding day memorable with beautiful decorations, catering, music and complete event arrangements.",
-    eventPicture:"https://www.alfaazphotography.com/wp-content/uploads/2020/05/FW-_-SA-1621-scaled.jpg",
-    place: "Gomti Nagar, Lucknow",
-    city: "Lucknow",
-    price: 50000,
-    noGuests: 500,
-    eventDate: "2026-12-15",
-  },
-  {
-    id: 2,
-    eventCategory: "Birthday",
-    eventName: "Grand Harmony Hall",
-    // eventCode: "BDAY001",
-    eventDetail:"Celebrate your special birthday with beautiful decorations, delicious food and entertainment.",
-    eventPicture:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVDQqOzrbmSCVtn3M5B-rumLzFcZKVEE-UXEndO6RCuA&s=10",
-    place: "Aliganj, Lucknow",
-    city: "Lucknow",
-    price: 25000,
-    noGuests: 150,
-    eventDate: "2026-11-20",
-  },
-  {
-    id: 3,
-    eventCategory: "Anniversary",
-    eventName: "Golden Crown Hall",
-    // eventCode: "ANN001",
-    eventDetail:"Golden Crown Hall is a luxurious and spacious venue perfect for weddings, receptions, anniversaries, parties, and special celebrations. With elegant interiors, beautiful decorations, modern facilities, and excellent hospitality, it provides a memorable setting for every occasion.",
-    eventPicture:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYX3Fb152vGtQTGkFzpkm6QbyuhiBEbRup6PC-Lm0Hz6ygS0ddhcrTlq4&s=10",
-    place: "Hazratganj, Lucknow",
-    city: "Lucknow",
-    price: 30000,
-    noGuests: 100,
-    eventDate: "2026-10-25",
-  },
-   {
-    id: 4,
-    eventCategory: "Party",
-    eventName: "StarLight Banquet",
-    // eventCode: "ANN001",
-    eventDetail:"Celebrate your anniversary with a romantic setup, dinner and beautiful decorations.",
-    eventPicture:"https://images.unsplash.com/photo-1496337589254-7e19d01cec44",
-    place: "Indira Nagar, Lucknow",
-    city: "Lucknow",
-    price: 10000,
-    noGuests: 80,
-    eventDate: "2026-8-25",
-  },
-  {
-    id: 5,
-    eventCategory: "Concert",
-    eventName: "Golden Crown Hall.",
-    // eventCode: "ANN001",
-    eventDetail:"Golden Crown Hall is a luxurious and spacious venue perfect for weddings, receptions, anniversaries, parties, and special celebrations. With elegant interiors, beautiful decorations, modern facilities, and excellent hospitality, it provides a memorable setting for every occasion.",
-    eventPicture:"https://images.unsplash.com/photo-1501386761578-eac5c94b800a",
-    place: "Alambagh, Lucknow",
-    city: "Lucknow",
-    price: 25000,
-    noGuests: 150,
-    eventDate: "2026-2-25",
-  },
-   {
-    id: 6,
-    eventCategory: "Seminar",
-    eventName: "Digital Learning Center",
-    // eventCode: "ANN001",
-    eventDetail:"A professional venue for coding workshops, IT training, and educational events with modern facilities and a comfortable learning environment.",
-    eventPicture:"https://images.unsplash.com/photo-1540575467063-178a50c2df87",
-    place: "Mahanagar, Lucknow",
-    city: "Lucknow",
-    price: 20000,
-    noGuests: 100,
-    eventDate: "2026-05-25",
-  },
-];
-
 function EventDetails() {
   const { id } = useParams();
-  const [event, setEvent] = useState(events.find((item) => item.id === Number(id)))
+
+  const [eventdetails, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const fetchEvent = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/eventdetails"
+      );
+
+      setEvents(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setError("Unable to load events");
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchEvent = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:5000/api/events/${id}`
-        );
-
-        setEvent(response.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchEvent();
-  }, [id]);
-
+  }, []);
   if (loading) {
-    return <h2 className="text-center mt-10">Loading...</h2>;
+    return (
+      <div className="flex items-center justify-center bg-[#FFFFE0]">
+        <h2 className="text-2xl font-semibold">
+          Loading Projects...
+        </h2>
+      </div>
+    );
   }
+   
+
+  const event = eventdetails.find(
+    (item) => item.EventId?.toString() === id
+);
+  
 
   if (!event) {
     return (
-      <h2 className="text-center mt-10">
-        Event not found
-      </h2>
+      <div className="min-h-screen flex items-center justify-center">
+        <h2 className="text-2xl font-bold text-red-500">
+          Event not found
+        </h2>
+      </div>
     );
   }
+  
 
   return (
     <div className="min-h-screen bg-gray-100 py-10">
@@ -129,7 +64,7 @@ function EventDetails() {
           <div className="md:w-1/2">
             <img
               src={event.eventPicture}
-              alt={event.eventName}
+              alt={event.title}
               className="w-full h-full min-h-[380px] object-cover"
             />
           </div>
@@ -138,7 +73,7 @@ function EventDetails() {
           <div className="md:w-2/3 p-6">
 
             <h2 className="text-3xl font-bold !text-purple-600">
-              {event.eventCategory}
+              {event.title}
             </h2>
 
             <h3 className="text-2xl text-black text-left mt-2">
@@ -153,11 +88,11 @@ function EventDetails() {
             <div className="mt-6 space-y-4 text-black text-left">
 
               <p>
-                <b>Place:</b> {event.place}
+                <b>Place:</b> {event.eventPlace}
               </p>
 
               <p>
-                🏙️ <b>City:</b> {event.city}
+                🏙️ <b>City:</b> {event.eventCity}
               </p>
 
               <p>
@@ -165,21 +100,21 @@ function EventDetails() {
               </p>
 
               <p>
-                👥 <b>Guests:</b> {event.noGuests}
+                👥 <b>Guests:</b> {event.guests}
               </p>
 
-              <p>
+              {/* <p>
                 📅 <b>Date:</b>{" "}
                 {new Date(event.eventDate).toLocaleDateString()}
-              </p>
+              </p>*/}
 
-            </div>
+            </div> 
 
             {/* Buttons */}
             <div className="mt-8 flex gap-4">
 
               <Link
-                to={`/booking/${event.id}`}
+                to={`/booking/${event.EventId}`}
                 className="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700"
               >
                 Book Now
