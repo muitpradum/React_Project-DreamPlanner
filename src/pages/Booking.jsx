@@ -7,10 +7,11 @@ function Booking() {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
+
         name: "",
         email: "",
         phone: "",
-        price:"",
+        price: "",
         guests: 1,
         date: "",
         eventName: "",
@@ -29,17 +30,18 @@ function Booking() {
 
         try {
             const bookingData = {
-                eventId: id,
+                EventId: id,
                 ...formData,
             };
 
-            // Save to MongoDB
+            // console.log("Booking ID:", id);
+            // console.log("Booking Data:", bookingData);
+
             const response = await axios.post(
                 "http://localhost:5000/api/bookings",
                 bookingData
             );
 
-            // Save to browser
             localStorage.setItem(
                 "booking",
                 JSON.stringify(bookingData)
@@ -48,12 +50,20 @@ function Booking() {
             alert(response.data.message || "Booking successful!");
 
             navigate("/React_Project-DreamPlanner");
+
         } catch (error) {
-            console.error(error);
-            alert("Booking failed!");
+            console.error(
+                "Booking Error:",
+                error.response?.data || error
+            );
+
+            alert(
+                error.response?.data?.error ||
+                error.response?.data?.message ||
+                "Booking failed!"
+            );
         }
     };
-
     return (
         <div className="min-h-screen bg-gray-100">
             <div className="text-center">
