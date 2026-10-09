@@ -27,7 +27,7 @@ import Udetails from './Category/Udetails'
 function App() {
   return (
     <>
-    <BrowserRouter basename="/React_Project-DreamPlanner">
+    <BrowserRouter {import.meta.env.DEV ? "/" : "/React_Project-DreamPlanner"}>
     <Header/>
       <Routes>
         <Route path="/" element={<Home />} />
