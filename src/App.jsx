@@ -27,10 +27,10 @@ import Udetails from './Category/Udetails'
 function App() {
   return (
     <>
-    <BrowserRouter>
+    <BrowserRouter basename="/React_Project-DreamPlanner">
     <Header/>
       <Routes>
-        <Route path="/React_Project-DreamPlanner" element={<Home />} />
+        <Route path="/" element={<Home />} />
          <Route path="/about" element={<About />} />
         <Route path="/events" element={<Events />} />
         <Route path="/eventdetails/:id" element={<EventDetails />} />

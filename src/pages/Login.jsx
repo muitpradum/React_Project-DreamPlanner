@@ -34,7 +34,7 @@ function Login() {
       localStorage.setItem("user", JSON.stringify(response.data.user));
 
       // Go to dashboard
-      navigate("/React_Project-DreamPlanner");
+      navigate("/");
 
     } catch (error) {
        alert(error.response?.data?.message || "Login failed");
