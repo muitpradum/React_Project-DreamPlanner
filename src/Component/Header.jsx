@@ -75,7 +75,7 @@ function Header() {
           {/* Navbar */}
           <div className="flex items-center gap-6 ">
             <Link
-              to="/"
+              to="/React_Project-DreamPlanner"
               className="hover:text-yellow-300"
             >
               Home
