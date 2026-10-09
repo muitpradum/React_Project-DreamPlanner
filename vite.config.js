@@ -7,6 +7,6 @@ export default defineConfig({
   plugins: [react(),
     tailwindcss(), 
   ],
-  base: "/React_Project-DreamPlanner/",
+  base: "/React_Project-DreamPlanner",
 
 })
