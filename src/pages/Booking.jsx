@@ -49,7 +49,7 @@ function Booking() {
 
             alert(response.data.message || "Booking successful!");
 
-            navigate("/React_Project-DreamPlanner");
+            navigate("/");
 
         } catch (error) {
             console.error(
