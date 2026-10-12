@@ -1,59 +1,47 @@
 import React from 'react'
-import dandiya from "../assets/image/dandiya-dance.jpg"
-import artsFestival from "../assets/image/artsFestival.jfif"
-import diwalirangoli from "../assets/image/diwalirangoli.jpg"
 import { useParams, Link } from 'react-router-dom'
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 
-const events = [
-    {
-        id: 1,
-        eventCategory: "Dandiya Celebration",
-        eventName: "Dream Celebration Arena",
-        eventDetail: "A beautiful and spacious venue designed for weddings, birthdays, anniversaries, engagements, parties, and special celebrations. It offers a comfortable atmosphere, elegant decorations, modern facilities, and ample space to create unforgettable memories with family and friends.",
-        eventPicture: dandiya,
-        place: "Sector 62, Noida",
-        city: "Noida",
-        price: "399",
-        eventDate: "October 16-18, 2026 "
 
-    },
-    {
-        id: 2,
-        eventCategory: "Creative Arts Festival",
-        eventName: "Kiran Nadar Museum of Art",
-        eventDetail: "A vibrant cultural venue where visitors can explore contemporary and modern Indian art through exhibitions, workshops, talks, and special events. It provides an inspiring space for art lovers, educational programs, cultural gatherings, and creative celebrations.",
-        eventPicture: artsFestival,
-        place: "Sunder Nursery, New Delhi",
-        price: "249",
-        eventDate: "October 02, 2026"
-    },
-    {
-        id: 3,
-        eventCategory: "Diwali Rangoli",
-        eventName: "Gulshan One29 Mall Event",
-        eventDetail: "A lively event destination offering a modern space for exhibitions, product launches, cultural programs, shopping events, entertainment activities, and community celebrations. It provides a vibrant atmosphere for visitors and organizers to enjoy memorable events.",
-        eventPicture: diwalirangoli,
-        place: "Ghaziabad",
-        price: "349",
-        eventDate: "November 6, 2026"
-    }
-
-]
 
 const Udetails = () => {
     const { id } = useParams();
+    const [homedetails, setEvents] = useState([]);
+    const [error, setError] = useState("");
+    const fetchEvent = async () => {
+        try {
+            const response = await axios.get(
+                "http://localhost:5000/api/homedetails"
+            );
 
-    const event = events.find((item) => item.id === Number(id));
+            setEvents(response.data);
+            setLoading(false);
+        } catch (error) {
+            console.log(error);
+            setError("Unable to load events");
+            setLoading(false);
+        }
+    };
 
-    if (!event) {
-        return (
-            <div className="min-h-screen flex items-center justify-center">
-                <h2 className="text-2xl font-bold text-red-500">
-                    Event not found
-                </h2>
-            </div>
-        );
+    useEffect(() => {
+        fetchEvent();
+    }, []);
+
+    const event = homedetails.find(
+    (item) => item.EventId?.toString() === id
+);
+  
+
+  if (!event) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <h2 className="text-2xl font-bold text-red-500">
+          Event not found
+        </h2>
+      </div>
+    );
     }
     return (
         <>
@@ -75,7 +63,7 @@ const Udetails = () => {
                         {/* Image */}
                         <div className="md:w-1/2">
                             <img
-                                src={event.eventPicture}
+                                src={`http://localhost:5000${event.eventPicture}`}
                                 alt={event.eventName}
                                 className="w-full h-full min-h-[380px] object-cover"
                             />
@@ -85,7 +73,7 @@ const Udetails = () => {
                         <div className="md:w-2/3 p-6">
 
                             <h2 className="text-3xl font-bold !text-purple-600">
-                                {event.eventCategory}
+                                {event.title}
                             </h2>
 
                             <h3 className="text-2xl text-black text-left mt-2">
@@ -115,9 +103,9 @@ const Udetails = () => {
                                     <b>Price:</b> ₹{event.price}
                                 </p>
 
-                                <p>
-                                    <b>Guests:</b> {event.noGuests}
-                                </p>
+                                {/* <p>
+                                    <b>Guests:</b> {event.guests}
+                                </p> */}
 
                                 <p>
                                     <b>Date:</b>{" "}
@@ -130,7 +118,7 @@ const Udetails = () => {
                             <div className="mt-8 flex gap-4">
 
                                 <Link
-                                    to={`/booking/${event.id}`}
+                                    to={`/booking/${event._id}`}
                                     className="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700"
                                 >
                                     Book Now

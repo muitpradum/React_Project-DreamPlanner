@@ -29,6 +29,9 @@ const informaldetailRoutes = require("./routes/informaldetailRoutes");
 const charityRoutes = require("./routes/charityRoutes");
 const charitydetailRoutes = require("./routes/charitydetailRoutes");
 
+const homeRoutes = require("./routes/homeRoutes");
+const homedetailRoutes = require("./routes/homedetailRoutes");
+
 
 
 app.use("/api/users", userRoutes);
@@ -44,6 +47,8 @@ app.use("/api/informalevents", informalRoutes);
 app.use("/api/informaldetails", informaldetailRoutes);
 app.use("/api/charityevents", charityRoutes);
 app.use("/api/charitydetails", charitydetailRoutes);
+app.use("/api/homeevents", homeRoutes);
+app.use("/api/homedetails", homedetailRoutes);
 
 
 const PORT = process.env.PORT || 5000;

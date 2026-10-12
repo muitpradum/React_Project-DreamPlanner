@@ -17,6 +17,40 @@ const bookingSchema = new mongoose.Schema(
         title: {
             type: String,
             required: true,
+            enum: [
+            "Wedding",
+            "Birthday Party",
+            "Anniversary",
+            "Graduation Party",
+            "Reunion Party",
+            "Engagement",
+
+            "Graduation Ceremony",
+            "Coding Workshop",
+            "Science Exhibition",
+            "Quiz Competition",
+            "Career Guidance",
+            "Educational Seminar",
+
+            "Music Concert",
+            "DJ Night",
+            "Stand-up Comedy",
+            "Dandiya Night",
+            "Rock Concert",
+            "Open Mic Night",
+
+            "Blood Donation Camp",
+            "NGO Support",
+            "Food Donation Drive",
+            "Orphanage Visit",
+            "Education Support",
+            "Clothes Donation Drive",
+
+            "Seminar",
+            "Party",
+            "Concert",
+            "Other"
+        ],
             trim: true,
         },
 
